@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Wafiq 💖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-soft: #ffafcc;
+            --pink-deep: #ff8fab;
+            --cream: #fb6f92;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(to bottom, #ffe5ec, #ffc2d1);
+            min-height: 100vh;
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #fff0f3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease-out;
+        }
+
+        .heart-loader {
+            width: 100px;
+            height: 90px;
+            position: relative;
+            animation: pulse 1s infinite;
+        }
+
+        .heart-loader:before, .heart-loader:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 80px;
+            border-radius: 50px 50px 0 0;
+            background: var(--pink-deep);
+        }
+
+        .heart-loader:before { left: 50px; transform: rotate(-45deg); transform-origin: 0 100%; }
+        .heart-loader:after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        #loading-text {
+            margin-top: 20px;
+            color: var(--pink-deep);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        /* Floating Elements */
+        .floating-photo {
+            position: fixed;
+            bottom: -150px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            object-fit: cover;
+            z-index: 10;
+            pointer-events: none;
+            animation: floatUp var(--duration) linear forwards;
+        }
+
+        .floating-love {
+            position: fixed;
+            bottom: -50px;
+            color: #ff4d6d;
+            font-size: 24px;
+            z-index: 5;
+            pointer-events: none;
+            animation: floatUp var(--duration) linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(360deg) translateX(var(--drift)); opacity: 0; }
+        }
+
+        /* Main Content */
+        .main-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #c9184a;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInDown 1.5s ease;
+        }
+
+        /* Envelope Logic */
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 250px;
+            margin: 50px auto;
+            cursor: pointer;
+            z-index: 50;
+        }
+
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://files.catbox.moe/2wgqhn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 2;
+        }
+
+        .pull-string {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100px;
+            background: #d90429;
+            z-index: 3;
+            border-radius: 2px;
+            transition: height 0.5s ease;
+        }
+
+        .pull-string:after {
+            content: "⬇️ TARIK";
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #d90429;
+            font-weight: bold;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .string-knob {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #d90429;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Letter Styling */
+        #letter {
+            display: none;
+            width: 95%;
+            max-width: 500px;
+            background: url('https://files.catbox.moe/m5tp3j.png');
+            background-size: 100% 100%;
+            padding: 60px 40px;
+            margin-top: -50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: slideUp 1s ease forwards;
+            position: relative;
+            z-index: 60;
+        }
+
+        .message-content {
+            font-family: 'Quicksand', sans-serif;
+            color: #4a4a4a;
+            line-height: 1.8;
+            font-size: 1rem;
+            text-align: left;
+            white-space: pre-line;
+        }
+
+        /* Button Styling */
+        .wa-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25d366;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 25px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+        }
+
+        .wa-button:hover {
+            transform: scale(1.05);
+            background-color: #1ebe57;
+        }
+
+        .wa-button svg {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio -->
+    <audio id="bgm" loop>
+        <source src="https://files.catbox.moe/ge74cf.mp4" type="audio/mp4">
+    </audio>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="heart-loader"></div>
+        <div id="loading-text">loaadingg saayyannggg</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container" id="mainContent">
+        <h1 id="title">Wafiq Khoirin Sya'bany</h1>
+        
+        <div class="envelope-wrapper" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="pull-string" id="string">
+                <div class="string-knob"></div>
+            </div>
+        </div>
+
+        <div id="letter">
+            <div class="message-content">
+                happy birthday ya sayangku wafiq 🤍🎉
+                ciee udah 15 tahun ajaaaa, makin gede makin cantikkk jugaa 😖💗
+
+                makasih ya udah hadir di hidup aku, udah jadi rumah buat aku, tempat aku cerita, ketawa
+                akkuu bersyukkut bangettt punyaaa kaammmuuu, walaupun aku kadang nyebelin tapi kamu tetep sabar nemenin aku
+
+                semoga di umur kamu sekarang semua hal baik dateng ke kamu yaa, apa yang kamu impiin pelan pelan bisa tercapai, sehat terus saayyangg, bahagia terus, dan jangan pernah berubah ya jadi wafiq yang aku kenaall sekarang 💞
+
+                aaakkkuuu haraapppp kittaaa biiisssaaa terruuss bareengg bareenngg, tetep kuat walaupun ada masalah, teteeep saalinngg jaaagggaiinnn satuuu saama laainnn 
+
+                once again happy birthday ciiinnntttaaakuuuuu 🎂✨
+                i love you more than you know 🥺💖
+
+                <div class="text-center">
+                    <a href="https://wa.me/628979717325" class="wa-button">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        Yuuuu chatt akuu lagii
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div style="height: 100px;"></div>
+    </div>
+
+    <div class="audio-control" onclick="toggleAudio()">
+        🎵
+    </div>
+
+    <script>
+        const photos = [
+            'https://files.catbox.moe/xsmffd.jpg',
+            'https://files.catbox.moe/bh4fek.jpg',
+            'https://files.catbox.moe/kp88od.jpg',
+            'https://files.catbox.moe/l4bqo1.jpg',
+            'https://files.catbox.moe/t72vql.jpg',
+            'https://files.catbox.moe/cxzmrs.jpg',
+            'https://files.catbox.moe/dbr0l2.jpg'
+        ];
+
+        const loadingTexts = [
+            "sebeentaarr loaadinng",
+            "1 jam kok selesaainyaa",
+            "pi boonk yakan hayyukk",
+            "wkwkwkw apasi bon",
+            "nih masuk"
+        ];
+
+        let audioStarted = false;
+        const bgm = document.getElementById('bgm');
+
+        // Loading Logic
+        window.onload = () => {
+            let textIndex = 0;
+            const textInterval = setInterval(() => {
+                textIndex = (textIndex + 1) % loadingTexts.length;
+                document.getElementById('loading-text').innerText = loadingTexts[textIndex];
+            }, 1400);
+
+            setTimeout(() => {
+                clearInterval(textInterval);
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'flex';
+                    startFloatingEffects();
+                }, 1000);
+            }, 7000);
+        };
+
+        function startFloatingEffects() {
+            // Floating Photos
+            setInterval(() => {
+                const img = document.createElement('img');
+                img.src = photos[Math.floor(Math.random() * photos.length)];
+                img.className = 'floating-photo';
+                const size = Math.random() * (100 - 60) + 60;
+                img.style.width = `${size}px`;
+                img.style.height = `${size}px`;
+                img.style.left = `${Math.random() * 90}%`;
+                img.style.setProperty('--duration', `${Math.random() * (12 - 7) + 7}s`);
+                img.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
+                document.body.appendChild(img);
+                setTimeout(() => img.remove(), 12000);
+            }, 2000);
+
+            // Floating Love
+            setInterval(() => {
+                const love = document.createElement('div');
+                love.className = 'floating-love';
+                love.innerHTML = ['❤️', '💖', '💗', '💓', '✨'][Math.floor(Math.random() * 5)];
+                love.style.left = `${Math.random() * 100}%`;
+                love.style.setProperty('--duration', `${Math.random() * (10 - 5) + 5}s`);
+                love.style.setProperty('--drift', `${(Math.random() - 0.5) * 100}px`);
+                document.body.appendChild(love);
+                setTimeout(() => love.remove(), 10000);
+            }, 500);
+        }
+
+        // Pull String Logic
+        const string = document.getElementById('string');
+        const envelope = document.getElementById('envelope');
+        const letter = document.getElementById('letter');
+        const title = document.getElementById('title');
+        let isPulled = false;
+
+        string.addEventListener('mousedown', startPull);
+        string.addEventListener('touchstart', startPull);
+
+        function startPull(e) {
+            if (isPulled) return;
+            
+            if (!audioStarted) {
+                bgm.play().catch(e => console.log("Audio need manual trigger"));
+                audioStarted = true;
+            }
+
+            const startY = e.type === 'mousedown' ? e.pageY : e.touches[0].pageY;
+            
+            const onMove = (moveEvent) => {
+                const currentY = moveEvent.type === 'mousemove' ? moveEvent.pageY : moveEvent.touches[0].pageY;
+                const diff = currentY - startY;
+                
+                if (diff > 50 && diff < 200) {
+                    string.style.height = (100 + diff) + 'px';
+                }
+                
+                if (diff >= 180 && !isPulled) {
+                    openLetter();
+                }
+            };
+
+            const onEnd = () => {
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onEnd);
+                document.removeEventListener('touchmove', onMove);
+                document.removeEventListener('touchend', onEnd);
+                if (!isPulled) string.style.height = '100px';
+            };
+
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onEnd);
+            document.addEventListener('touchmove', onMove);
+            document.addEventListener('touchend', onEnd);
+        }
+
+        function openLetter() {
+            isPulled = true;
+            string.style.height = '250px';
+            string.style.opacity = '0';
+            
+            setTimeout(() => {
+                envelope.style.transition = 'all 1s ease';
+                envelope.style.transform = 'translateY(100px) scale(0.8)';
+                envelope.style.opacity = '0';
+                
+                setTimeout(() => {
+                    envelope.style.display = 'none';
+                    letter.style.display = 'block';
+                    title.innerText = "Selamat Ulang Tahun Ke-15 Wafiq! 🎉";
+                }, 500);
+            }, 300);
+        }
+
+        function toggleAudio() {
+            if (bgm.paused) {
+                bgm.play();
+            } else {
+                bgm.pause();
+            }
+        }
+    </script>
+</body>
+</html>

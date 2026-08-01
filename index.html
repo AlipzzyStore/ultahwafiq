@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Wafiq! 🎉</title>
+    <title>Ultah Wapik Boccilll :></title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka+One&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka+One&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink-bg: #ffe4e6; /* Rose 100 */
-            --pink-dark: #fecdd3; /* Rose 200 */
+            --pink-bg: #ffe4e6; 
+            --pink-dark: #fecdd3; 
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -17,69 +17,113 @@
             overflow-x: hidden;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
         .font-heading { font-family: 'Fredoka One', cursive; }
         .font-handwriting { font-family: 'Caveat', cursive; }
 
+        /* Loader */
         #initial-loader {
-            position: fixed;
-            inset: 0;
-            background: var(--pink-bg);
-            z-index: 100000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            position: fixed; inset: 0; background: var(--pink-bg); z-index: 100000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 0.5s ease;
         }
-        .heart-beat {
-            animation: beat 1s infinite alternate;
+        .heart-beat { animation: beat 1s infinite alternate; }
+        @keyframes beat { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
+
+        /* iPhone PIN Screen */
+        #pin-screen { 
+            position: fixed; inset: 0; background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 99995; display: none; flex-direction: column; align-items: center; justify-content: center; 
+            opacity: 0; transition: opacity 0.5s ease; padding: 20px; 
         }
-        @keyframes beat {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.2); }
+        .pin-dot-container { display: flex; justify-content: center; gap: 20px; margin-bottom: 60px; }
+        .pin-dot { 
+            width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid #f43f5e; 
+            transition: all 0.2s ease; 
         }
+        .pin-dot.filled { background: #f43f5e; border-color: #f43f5e; }
         
+        .pin-pad { 
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px 30px; 
+            max-width: 300px; margin: 0 auto; 
+        }
+        .keypad-btn { 
+            width: 75px; height: 75px; border-radius: 50%; 
+            background: rgba(244, 63, 94, 0.05); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            font-size: 32px; font-weight: 300; color: #1f2937; 
+            cursor: pointer; transition: all 0.15s ease;
+        }
+        .keypad-btn:active { background: rgba(244, 63, 94, 0.2); transform: scale(0.95); }
+        .keypad-sub { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: #6b7280; margin-top: -4px; }
+
+        /* Envelope Screen */
         #envelope-screen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #ffe4e6 0%, #fbcfe8 100%);
-            z-index: 99990;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            position: fixed; inset: 0; background: linear-gradient(135deg, #ffe4e6 0%, #fbcfe8 100%);
+            z-index: 99990; display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 0.8s ease;
         }
-        .envelope {
-            cursor: pointer;
-            transition: transform 0.3s ease;
+        .envelope { cursor: pointer; transition: transform 0.3s ease; position: relative; }
+        .envelope:hover { transform: scale(1.05) translateY(-10px); }
+        .envelope-lid { transform-origin: top; transition: transform 0.5s ease; }
+        .envelope.open .envelope-lid { transform: rotateX(180deg); }
+
+        /* Main Content (Surat) */
+        #main-content {
+            display: none; opacity: 0; transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); min-height: 100vh; padding: 20px; max-width: 800px; margin: 0 auto;
+        }
+        .letter-paper {
+            background-color: #fffaf0;
+            background-image: repeating-linear-gradient(transparent, transparent 31px, #cbd5e1 31px, #cbd5e1 32px);
+            border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 40px 30px 40px 55px; line-height: 32px; position: relative; margin-top: 40px;
+            text-align: justify;
+        }
+        .letter-paper::before { content: ''; position: absolute; top: 0; bottom: 0; left: 35px; width: 2px; background: #fca5a5; }
+        .typewriter-text { display: inline; }
+        .cursor { animation: blink 1s infinite; font-weight: bold; color: #f43f5e; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Halaman Khusus Foto */
+        #photo-screen {
+            display: none; opacity: 0; transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); 
+            min-height: 100vh; padding: 40px 20px; max-width: 1100px; margin: 0 auto;
+        }
+        .photo-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px; justify-items: center; padding-top: 20px;
+        }
+        
+        .photo-card {
+            background: white; padding: 15px 15px 45px 15px; border-radius: 4px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15); width: 100%; max-width: 320px;
+            opacity: 0; 
+            transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
             position: relative;
         }
-        .envelope:hover {
-            transform: scale(1.05) translateY(-10px);
+        .photo-img { width: 100%; height: auto; border-radius: 4px; object-fit: cover; filter: grayscale(30%) sepia(10%); transition: filter 0.4s ease; }
+        
+        .photo-card:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 50; box-shadow: 0 15px 35px rgba(0,0,0,0.25);
         }
-        .envelope-lid {
-            transform-origin: top;
-            transition: transform 0.5s ease;
+        .photo-card:hover .photo-img { filter: grayscale(0%) sepia(0%); }
+
+        @keyframes fountain-burst {
+            0% { transform: translateY(100vh) scale(0.2) rotate(var(--rot-start)); opacity: 0; }
+            60% { transform: translateY(-20px) scale(1.02) rotate(var(--rot-mid)); opacity: 1; }
+            80% { transform: translateY(5px) scale(0.99) rotate(var(--rot-mid)); opacity: 1; }
+            100% { transform: translateY(0) scale(1) rotate(var(--rot-final)); opacity: 1; }
         }
-        .envelope.open .envelope-lid {
-            transform: rotateX(180deg);
+        .burst-active {
+            animation: fountain-burst 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        .bg-shapes {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-        }
-        .shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.4);
-            animation: float-up linear infinite;
-            bottom: -100px;
-        }
+        /* Background Shapes */
+        .bg-shapes { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; pointer-events: none; }
+        .shape { position: absolute; background: rgba(255, 255, 255, 0.4); animation: float-up linear infinite; bottom: -100px; }
         .shape.circle { border-radius: 50%; }
         .shape.rounded { border-radius: 20px; }
         @keyframes float-up {
@@ -89,157 +133,67 @@
             100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
         }
 
-        #main-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
-            min-height: 100vh;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .letter-paper {
-            background-color: #fffaf0;
-            background-image: repeating-linear-gradient(transparent, transparent 31px, #cbd5e1 31px, #cbd5e1 32px);
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            padding: 40px 30px;
-            line-height: 32px;
-            position: relative;
-        }
-        .letter-paper::before {
-            content: '';
-            position: absolute;
-            top: 0; bottom: 0; left: 40px;
-            width: 2px;
-            background: #fca5a5;
-        }
-        .typewriter-text {
-            display: inline;
-            padding-left: 30px; /* Space for the red margin line */
-        }
-        .cursor {
-            animation: blink 1s infinite;
-            font-weight: bold;
-            color: #f43f5e;
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        .photo-gallery {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            margin-top: 60px;
-        }
-        .photo-card {
-            background: white;
-            padding: 15px 15px 30px 15px;
-            border-radius: 8px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            transform: rotate(-2deg);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0; /* For scroll animation */
-            transform: translateY(50px) rotate(-5deg);
-        }
-        .photo-card.visible {
-            opacity: 1;
-            transform: translateY(0) rotate(0deg);
-        }
-        .photo-card:nth-child(even) { transform: translateY(50px) rotate(5deg); }
-        .photo-card:nth-child(even).visible { transform: translateY(0) rotate(2deg); }
-        .photo-card:nth-child(odd).visible { transform: translateY(0) rotate(-2deg); }
-        
-        .photo-img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            /* Gray/Sepia filter */
-            filter: grayscale(80%) sepia(20%);
-            transition: filter 0.5s ease;
-        }
-        .photo-card:hover {
-            transform: scale(1.05) translateY(-10px) !important;
-            z-index: 10;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        .photo-card:hover .photo-img {
-            filter: grayscale(0%) sepia(0%);
-        }
-
+        /* Journey Screen - Diperhalus dan Lebih Dinamis */
         #journey-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
-            z-index: 99999;
-            display: none;
-            flex-direction: column;
-            justify-content: flex-end;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 1s ease;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #bae6fd 0%, #e0f2fe 50%, #fbcfe8 100%);
+            z-index: 99999; display: none; flex-direction: column; justify-content: flex-end; overflow: hidden; opacity: 0; transition: opacity 1.2s ease;
+        }
+        
+        /* Awan Berjalan Halus */
+        .cloud {
+            position: absolute; background: rgba(255, 255, 255, 0.7); border-radius: 50px; filter: blur(1px);
+            animation: move-cloud linear infinite;
+        }
+        @keyframes move-cloud {
+            from { transform: translateX(-150px); }
+            to { transform: translateX(calc(100vw + 150px)); }
         }
 
-        .ground {
-            width: 100%; height: 80px;
-            background: #4ade80;
-            border-top: 8px solid #22c55e;
-            position: relative;
-            z-index: 10;
+        .ground { 
+            width: 100%; height: 90px; background: linear-gradient(to bottom, #4ade80, #22c55e); 
+            border-top: 8px solid #16a34a; position: relative; z-index: 10; 
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .character-container {
-            position: absolute;
-            bottom: 80px;
-            left: 20vw;
-            display: flex;
-            gap: 15px;
-            z-index: 20;
+        /* Karakter Berjalan Lebih Luwes & Smooth */
+        .character-container { 
+            position: absolute; bottom: 90px; left: 15vw; display: flex; gap: 20px; z-index: 25; 
+            transition: transform 0.5s ease-out;
         }
-        .character {
-            animation: bounce-walk 0.5s infinite alternate cubic-bezier(0.4, 0, 0.6, 1);
+        .character { 
+            display: flex; flex-direction: column; align-items: center;
+            animation: smooth-walk 0.6s infinite alternate ease-in-out;
         }
-        .character:nth-child(2) { animation-delay: 0.25s; }
-        @keyframes bounce-walk {
-            0% { transform: translateY(0) rotate(-5deg); }
-            100% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        .scrolling-track {
-            position: absolute;
-            bottom: 80px;
-            left: 0;
-            display: flex;
-            align-items: flex-end;
-            gap: 300px;
-            width: max-content;
-            padding-right: 100vw;
-            z-index: 15;
-            transform: translateX(100vw);
-        }
-        @keyframes scroll-track {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
+        .character:nth-child(2) { animation-delay: 0.3s; }
+        @keyframes smooth-walk { 
+            0% { transform: translateY(0) rotate(-4deg) scaleY(1); } 
+            50% { transform: translateY(-14px) rotate(0deg) scaleY(1.03); }
+            100% { transform: translateY(-26px) rotate(4deg) scaleY(0.97); } 
         }
 
-        .obstacle {
-            background: white;
-            padding: 10px 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            font-family: 'Fredoka One', cursive;
-            color: #4b5563;
-            border: 4px solid #fecdd3;
-            position: relative;
+        /* Jalur / Track Perjalanan */
+        .scrolling-track { 
+            position: absolute; bottom: 90px; left: 0; display: flex; align-items: flex-end; 
+            gap: 320px; width: max-content; padding-right: 100vw; z-index: 15; 
+            transform: translateX(100vw); 
         }
-        .obstacle::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 20px;
-            background: #fecdd3;
+        @keyframes scroll-track { 
+            0% { transform: translateX(100vw); } 
+            100% { transform: translateX(-100%); } 
+        }
+
+        /* Kotak Kenangan (Obstacle) dengan Efek Hover Cantik */
+        .obstacle { 
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);
+            padding: 14px 24px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); 
+            font-family: 'Fredoka One', cursive; color: #4b5563; border: 4px solid #fecdd3; 
+            position: relative; transition: transform 0.3s ease;
+        }
+        .obstacle:hover { transform: translateY(-8px) scale(1.05); }
+        .obstacle::after { 
+            content: ''; position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); 
+            width: 4px; height: 22px; background: #fecdd3; border-radius: 2px;
         }
     </style>
 </head>
@@ -248,24 +202,45 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="#f43f5e" stroke="#f43f5e" stroke-width="2" class="heart-beat mb-4">
             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
         </svg>
-        <p class="font-heading text-rose-500 text-xl animate-pulse">Tunggu sebentar ya sayang...</p>
+        <p class="font-heading text-rose-500 text-xl animate-pulse">sebentaaarr yaa sayaannggg</p>
     </div>
 
-    <div id="envelope-screen">
+    <!-- PIN Screen -->
+    <div id="pin-screen">
+        <h2 class="font-heading text-2xl text-gray-700 mb-8">Enter Passcode</h2>
+        <div class="pin-dot-container" id="pin-display">
+            <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+            <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+        </div>
+        <div class="pin-pad">
+            <div class="keypad-btn" onclick="addPin('1')">1<span class="keypad-sub"></span></div>
+            <div class="keypad-btn" onclick="addPin('2')">2<span class="keypad-sub">ABC</span></div>
+            <div class="keypad-btn" onclick="addPin('3')">3<span class="keypad-sub">DEF</span></div>
+            <div class="keypad-btn" onclick="addPin('4')">4<span class="keypad-sub">GHI</span></div>
+            <div class="keypad-btn" onclick="addPin('5')">5<span class="keypad-sub">JKL</span></div>
+            <div class="keypad-btn" onclick="addPin('6')">6<span class="keypad-sub">MNO</span></div>
+            <div class="keypad-btn" onclick="addPin('7')">7<span class="keypad-sub">PQRS</span></div>
+            <div class="keypad-btn" onclick="addPin('8')">8<span class="keypad-sub">TUV</span></div>
+            <div class="keypad-btn" onclick="addPin('9')">9<span class="keypad-sub">WXYZ</span></div>
+            <div class="keypad-btn" style="background: transparent; box-shadow: none;"></div>
+            <div class="keypad-btn" onclick="addPin('0')">0<span class="keypad-sub"></span></div>
+            <div class="keypad-btn" style="font-size: 16px; font-weight: 400; background: transparent; box-shadow: none;" onclick="clearPin()">Cancel</div>
+        </div>
+        <p id="pin-error" class="text-rose-600 font-handwriting text-xl mt-8 opacity-0 transition-opacity duration-300 text-center px-4">saallaahh saayaanng pin nya tuh tgl lahir km sampe tahun bulan ke brp gt gt :&gt;</p>
+    </div>
+
+    <!-- Envelope Screen -->
+    <div id="envelope-screen" style="display:none;">
         <div class="bg-shapes" id="bg-shapes-envelope"></div>
         <div class="text-center mb-8 px-4">
-            <h1 class="font-heading text-3xl md:text-5xl text-rose-500 mb-2">Ada Surat Buat Kamu!</h1>
-            <p class="font-handwriting text-2xl text-rose-400">Klik amplopnya ya cantikk 😘</p>
+            <h1 class="font-heading text-3xl md:text-5xl text-white mb-2">cek surat nya donkk</h1>
+            <p class="font-handwriting text-2xl text-rose-400">klik amploppnyaa yyaa saayyaanngg</p>
         </div>
         <div class="envelope" id="envelope-btn">
             <svg width="200" height="150" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
-                <!-- Back of envelope -->
                 <rect x="0" y="0" width="200" height="150" fill="#fecdd3" rx="10"/>
-                <!-- Bottom fold -->
                 <path d="M0 150 L100 70 L200 150 Z" fill="#fda4af"/>
-                <!-- Top flap (lid) -->
                 <path d="M0 0 L100 80 L200 0 Z" fill="#fb7185" class="envelope-lid"/>
-                <!-- Heart Seal -->
                 <circle cx="100" cy="80" r="20" fill="white" class="shadow-md"/>
                 <path d="M100 88C100 88 108 81 108 76C108 72 104 69 100 73C96 69 92 72 92 76C92 81 100 88 100 88Z" fill="#f43f5e"/>
             </svg>
@@ -277,8 +252,9 @@
         <source src="https://files.catbox.moe/ge74cf.mp4" type="video/mp4">
     </video>
 
+    <!-- Main Content (Hanya Surat & Kado) -->
     <div id="main-content">
-        <h1 class="text-center font-heading text-4xl md:text-5xl text-rose-500 mb-8 mt-4 animate-bounce">Happy 15th Birthday Wafiq! 🎂</h1>
+        <h1 class="text-center font-heading text-4xl md:text-5xl text-white mb-2 mt-4">Happyyyy Birthdaayyyy caannttikk 🎂</h1>
         
         <div class="letter-paper mb-16">
             <p class="font-handwriting text-2xl md:text-3xl text-gray-800">
@@ -286,88 +262,133 @@
             </p>
         </div>
 
-        <div class="photo-gallery">
-            <!-- 7 Photos mapped to their correct image src -->
-            <div class="photo-card fade-in-element"><img src="https://files.catbox.moe/xsmffd.jpg" alt="Wafiq 1" class="photo-img"></div>
-            <div class="photo-card fade-in-element"><img src="https://files.catbox.moe/bh4fek.jpg" alt="Wafiq 2" class="photo-img"></div>
-            <div class="photo-card fade-in-element"><img src="https://files.catbox.moe/kp88od.jpg" alt="Wafiq 3" class="photo-img"></div>
-            <div class="photo-card fade-in-element"><img src="https://files.catbox.moe/l4bqo1.jpg" alt="Wafiq 4" class="photo-img"></div>
-            <div class="photo-card fade-in-element"><img src="https://files.catbox.moe/t72vql.jpg" alt="Wafiq 5" class="photo-img"></div>
-            <div class="photo-card fade-in-element"><img src="https://files.catbox.moe/cxzmrs.jpg" alt="Wafiq 6" class="photo-img"></div>
-            <div class="photo-card fade-in-element"><img src="https://files.catbox.moe/dbr0l2.jpg" alt="Wafiq 7" class="photo-img"></div>
+        <div id="gift-container" class="flex flex-col items-center justify-center opacity-0 transition-all duration-1000 pb-20" style="display: none; transform: translateY(20px);">
+            <p class="font-handwriting text-3xl text-rose-500 mb-6">Buka Kadonya Sayang!</p>
+            <button onclick="window.openSurprise()" class="transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120" class="drop-shadow-xl">
+                    <ellipse cx="50" cy="88" rx="35" ry="8" fill="rgba(0,0,0,0.1)"/>
+                    <rect x="20" y="40" width="60" height="45" fill="#e11d48" rx="4"/>
+                    <rect x="43" y="40" width="14" height="45" fill="#fde047"/>
+                    <rect x="16" y="25" width="68" height="15" fill="#be123c" rx="3"/>
+                    <rect x="43" y="25" width="14" height="15" fill="#fde047"/>
+                    <path d="M50 25 C30 0, 15 20, 43 25 Z" fill="#facc15"/>
+                    <path d="M50 25 C35 12, 28 20, 43 25 Z" fill="#fef08a"/>
+                    <path d="M50 25 C70 0, 85 20, 57 25 Z" fill="#facc15"/>
+                    <path d="M50 25 C65 12, 72 20, 57 25 Z" fill="#fef08a"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Halaman Khusus Foto -->
+    <div id="photo-screen">
+        <h2 class="text-center font-heading text-4xl md:text-5xl text-white mb-4 drop-shadow-sm">Foto foto cantikk ak</h2>
+        <p class="text-center font-handwriting text-2xl text-rose-400 mb-8">muka kalem aslinya galak</p>
+        
+        <div class="photo-grid" id="photo-grid-container">
+            <div class="photo-card"><img src="https://files.catbox.moe/xsmffd.jpg" alt="Wafiq 1" class="photo-img"></div>
+            <div class="photo-card"><img src="https://files.catbox.moe/bh4fek.jpg" alt="Wafiq 2" class="photo-img"></div>
+            <div class="photo-card"><img src="https://files.catbox.moe/kp88od.jpg" alt="Wafiq 3" class="photo-img"></div>
+            <div class="photo-card"><img src="https://files.catbox.moe/l4bqo1.jpg" alt="Wafiq 4" class="photo-img"></div>
+            <div class="photo-card"><img src="https://files.catbox.moe/t72vql.jpg" alt="Wafiq 5" class="photo-img"></div>
+            <div class="photo-card"><img src="https://files.catbox.moe/cxzmrs.jpg" alt="Wafiq 6" class="photo-img"></div>
+            <div class="photo-card"><img src="https://files.catbox.moe/dbr0l2.jpg" alt="Wafiq 7" class="photo-img"></div>
         </div>
 
-        <div class="flex justify-center mt-12 pb-16 fade-in-element">
-            <button onclick="window.startJourney()" class="bg-rose-500 text-white font-heading py-4 px-8 rounded-full shadow-[0_10px_20px_rgba(244,63,94,0.4)] hover:bg-rose-600 hover:scale-105 transition-all animate-bounce text-xl flex items-center gap-2">
-                coba pencet sayaanggg 
+        <div id="journey-btn-container" class="flex justify-center mt-16 pb-16 opacity-0 transition-all duration-1000" style="transform: translateY(20px);">
+            <button onclick="window.startJourney()" class="bg-rose-500 text-white font-heading py-4 px-8 rounded-full shadow-[0_10px_20px_rgba(244,63,94,0.4)] hover:bg-rose-600 hover:shadow-[0_15px_25px_rgba(244,63,94,0.6)] hover:-translate-y-1 transition-all duration-300 text-xl flex items-center gap-2">
+                cobbaa klikk ini deehh 
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
         </div>
     </div>
 
+    <!-- Halaman Journey yang Diperhalus & Dipercantik -->
     <div id="journey-screen">
-        <div class="absolute top-10 left-10 opacity-70" style="animation: bounce-text 3s infinite;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-        </div>
-        <div class="absolute top-20 right-32 opacity-70" style="animation: bounce-text 4s infinite 1s;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-        </div>
-        <div class="absolute top-8 right-10 opacity-70" style="animation: bounce-text 5s infinite 2s;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-        </div>
-        
+        <!-- Awan Background Bergerak -->
+        <div class="cloud" style="top: 15%; width: 120px; height: 40px; animation-duration: 25s; opacity: 0.6;"></div>
+        <div class="cloud" style="top: 28%; width: 180px; height: 50px; animation-duration: 35s; animation-delay: -5s; opacity: 0.4;"></div>
+        <div class="cloud" style="top: 10%; width: 90px; height: 30px; animation-duration: 20s; animation-delay: -10s; opacity: 0.5;"></div>
+
         <div class="scrolling-track" id="track">
-            <div class="obstacle border-blue-300 flex items-center">Awal Kenal <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-blue-500"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
-            <div class="obstacle border-pink-300 flex items-center">Masa PDKT <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-pink-500"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
-            <div class="obstacle border-gray-400 flex items-center">Berantem Kecil <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-gray-500"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"/><polyline points="13 11 9 17 15 17 11 23"/></svg></div>
-            <div class="obstacle border-blue-400 flex items-center">Banyak Tugas & Sibuk <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-blue-600"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
-            <div class="obstacle border-pink-400 flex items-center">Saling Support <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-pink-600"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></div>
-            <div class="obstacle border-red-400 flex items-center">Makin Sayang <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#f43f5e" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+            <div class="obstacle border-blue-300 flex items-center">awal kenal <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-blue-500"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="obstacle border-pink-300 flex items-center">malu malu kids <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-pink-500"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+            <div class="obstacle border-gray-400 flex items-center">hTs Y hM yA mlS <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-gray-500"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"/><polyline points="13 11 9 17 15 17 11 23"/></svg></div>
+            <div class="obstacle border-blue-400 flex items-center">mulaai fokuuss <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-blue-600"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
+            <div class="obstacle border-pink-400 flex items-center">pacaarraaannnnnnnnnnnnnnnnnnnnnnnnnn <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-pink-600"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></div>
+            <div class="obstacle border-red-400 flex items-center">samaaa saama kecintaaann <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#f43f5e" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
             <div class="obstacle border-yellow-400 bg-yellow-100 text-yellow-600 text-2xl px-6 py-4 shadow-xl flex items-center" style="border-width: 6px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-                FINISH: Terus Bersama! 
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                FINISH : sellaallu langgeengg yaaa saayaaanngg
             </div>
         </div>
 
-        <div class="character-container">
-            <div class="character flex flex-col items-center">
-                <span class="text-xs font-bold text-white bg-blue-500 px-3 py-1 rounded-full mb-2 shadow-md">Alip</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-md bg-white rounded-full p-2 border-2 border-blue-200"><circle cx="16" cy="5" r="3"/><path d="M12 15V8l-4-2"/><path d="m14 13-3 5-3-2"/><path d="m17 21-2-5 3-2"/><path d="m16 8-2 2-3-2"/></svg>
+        <!-- Karakter Alip & Wafiq -->
+        <div class="character-container" id="char-box">
+            <div class="character">
+                <span class="text-xs font-bold text-white bg-blue-500 px-3 py-0.5 rounded-full mb-1.5 shadow-sm">Alip</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-md bg-white rounded-full p-2 border-2 border-blue-200"><circle cx="16" cy="5" r="3"/><path d="M12 15V8l-4-2"/><path d="m14 13-3 5-3-2"/><path d="m17 21-2-5 3-2"/><path d="m16 8-2 2-3-2"/></svg>
             </div>
-            <div class="character flex flex-col items-center">
-                <span class="text-xs font-bold text-white bg-pink-500 px-3 py-1 rounded-full mb-2 shadow-md">Wafiq</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-md bg-white rounded-full p-2 border-2 border-pink-200"><circle cx="16" cy="5" r="3"/><path d="M12 15V8l-4-2"/><path d="m14 13-3 5-3-2"/><path d="m17 21-2-5 3-2"/><path d="m16 8-2 2-3-2"/></svg>
+            <div class="character">
+                <span class="text-xs font-bold text-white bg-pink-500 px-3 py-0.5 rounded-full mb-1.5 shadow-sm">Wafiq</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-md bg-white rounded-full p-2 border-2 border-pink-200"><circle cx="16" cy="5" r="3"/><path d="M12 15V8l-4-2"/><path d="m14 13-3 5-3-2"/><path d="m17 21-2-5 3-2"/><path d="m16 8-2 2-3-2"/></svg>
             </div>
         </div>
         <div class="ground"></div>
 
         <div id="journey-overlay" class="absolute inset-0 bg-black/60 hidden flex-col justify-center items-center text-center p-6 z-[999999] opacity-0 transition-opacity duration-1000">
-            <h2 class="text-3xl md:text-5xl font-heading text-white mb-4 animate-bounce flex items-center justify-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                Yeayyyy! Kita Menang! 
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            </h2>
-            <p class="text-white font-body text-xl md:text-2xl flex items-center justify-center gap-2">
-                Berhasil ngelewatin semua rintangan hubungan kita 
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f43f5e" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-            </p>
-            <p class="text-white/80 font-body text-sm mt-8">balik ke surat yaa cintaa...</p>
+            <h2 class="text-3xl md:text-5xl font-heading text-white mb-4 animate-bounce">Yeyyyy menangg 🎉</h2>
+            <p class="text-white font-body text-xl md:text-2xl">berhasil ngelewatin rintangan kmrn kmrn >< ❤️</p>
         </div>
     </div>
 
     <script>
+        let currentPin = "";
+        const CORRECT_PIN = "31072011";
+
+        window.addPin = function(num) {
+            if (currentPin.length < 8) {
+                currentPin += num;
+                updateDots();
+                if (currentPin.length === 8) checkPin();
+            }
+        }
+        window.clearPin = function() { 
+            currentPin = ""; 
+            updateDots(); 
+            document.getElementById('pin-error').style.opacity = '0'; 
+        }
+        function updateDots() {
+            const dots = document.querySelectorAll('.pin-dot');
+            dots.forEach((dot, idx) => {
+                if(idx < currentPin.length) dot.classList.add('filled');
+                else dot.classList.remove('filled');
+            });
+        }
+        function checkPin() {
+            if (currentPin === CORRECT_PIN) {
+                document.getElementById('pin-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('pin-screen').style.display = 'none';
+                    document.getElementById('envelope-screen').style.display = 'flex';
+                    void document.getElementById('envelope-screen').offsetWidth;
+                    document.getElementById('envelope-screen').style.opacity = '1';
+                }, 500);
+            } else {
+                document.getElementById('pin-error').style.opacity = '1';
+                setTimeout(clearPin, 2000);
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
-            // Variables
             const initialLoader = document.getElementById('initial-loader');
             const envelopeScreen = document.getElementById('envelope-screen');
             const envelopeBtn = document.getElementById('envelope-btn');
             const mainContent = document.getElementById('main-content');
+            const photoScreen = document.getElementById('photo-screen');
             const bgMusic = document.getElementById('bg-music');
             const typewriterEl = document.getElementById('typewriter-text');
             const letterMsg = "haaiii sayaanngggkuu, happy birthdayyyy yaaaaa cannntiikkkk ciiee udaahhh umuuuurr 15 tahuunnn. Semoga kamuuu diberii kesehatan panjang umuurrr, jangan sering maraaahh maraahh cilll. Aku juggaa mintaa maafff yaaa klooo adaaa salaahh ke kaammuu btw akuuu seneengg harii iniii kamuuu ulang tahuunnn :> mogga rezeki nya ngalirr yaaa sayangg dan terutam semogaa kitaaaa bisa bersama sama teruss kalo bisa sampe mati, maaff yaa kalo design website nya jeellekk mwehehehe barruu belajarrr, uddahhh segiituu ajaa ucaapan darii akuu. Lovee youuuu saayyannggggggggggg";
 
-            // 1. Setup Background Animation Shapes
             function createShapes(containerId, count) {
                 const container = document.getElementById(containerId);
                 for (let i = 0; i < count; i++) {
@@ -375,10 +396,8 @@
                     shape.classList.add('shape');
                     if (Math.random() > 0.5) shape.classList.add('circle');
                     else shape.classList.add('rounded');
-                    
                     const size = Math.random() * 40 + 20;
-                    shape.style.width = `${size}px`;
-                    shape.style.height = `${size}px`;
+                    shape.style.width = `${size}px`; shape.style.height = `${size}px`;
                     shape.style.left = `${Math.random() * 100}vw`;
                     shape.style.animationDuration = `${Math.random() * 10 + 10}s`;
                     shape.style.animationDelay = `${Math.random() * 5}s`;
@@ -388,93 +407,109 @@
             createShapes('bg-shapes-envelope', 15);
             createShapes('bg-shapes-main', 25);
 
-            // 2. Hide loader after a brief moment
             setTimeout(() => {
                 initialLoader.style.opacity = '0';
                 setTimeout(() => {
                     initialLoader.style.display = 'none';
+                    document.getElementById('pin-screen').style.display = 'flex';
+                    void document.getElementById('pin-screen').offsetWidth;
+                    document.getElementById('pin-screen').style.opacity = '1';
                 }, 500);
             }, 2000);
 
-            // 3. Open Envelope Event
             envelopeBtn.addEventListener('click', () => {
                 envelopeBtn.classList.add('open');
-                
-                // Play music securely (user gesture triggers it)
                 bgMusic.volume = 0.5;
-                bgMusic.play().catch(e => console.log("Auto-play prevented by browser."));
+                bgMusic.play().catch(e => console.log("Auto-play prevented"));
 
-                // Transition to Main Content
                 setTimeout(() => {
                     envelopeScreen.style.opacity = '0';
                     setTimeout(() => {
                         envelopeScreen.style.display = 'none';
                         mainContent.style.display = 'block';
-                        void mainContent.offsetWidth; // trigger reflow
+                        void mainContent.offsetWidth;
                         mainContent.style.opacity = '1';
                         
-                        // Start Typing Effect
-                        typeWriterEffect(letterMsg, typewriterEl, 40);
-                        
-                        // Start Scroll Observer for Photos
-                        initScrollObserver();
+                        let i = 0;
+                        typewriterEl.innerHTML = "";
+                        function type() {
+                            if (i < letterMsg.length) {
+                                typewriterEl.innerHTML += letterMsg.charAt(i);
+                                i++;
+                                setTimeout(type, 45);
+                            } else {
+                                const giftContainer = document.getElementById('gift-container');
+                                giftContainer.style.display = 'flex';
+                                void giftContainer.offsetWidth;
+                                giftContainer.style.opacity = '1';
+                                giftContainer.style.transform = 'translateY(0)';
+                            }
+                        }
+                        type();
                     }, 800);
-                }, 600); // Wait for envelope lid animation
+                }, 600);
             });
 
-            // 4. Typewriter Effect Logic
-            function typeWriterEffect(text, element, speed) {
-                let i = 0;
-                element.innerHTML = "";
-                function type() {
-                    if (i < text.length) {
-                        element.innerHTML += text.charAt(i);
-                        i++;
-                        setTimeout(type, speed);
-                    }
-                }
-                type();
-            }
-
-            // 5. Scroll Observer for smooth photo reveals
-            function initScrollObserver() {
-                const elements = document.querySelectorAll('.fade-in-element');
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-                elements.forEach(el => observer.observe(el));
-            }
-
-            // 6. Journey Logic (Attached globally so HTML inline onclick can access it)
-            window.startJourney = function() {
-                const journeyScreen = document.getElementById('journey-screen');
-                const track = document.getElementById('track');
-                const journeyOverlay = document.getElementById('journey-overlay');
-
+            window.openSurprise = function() {
                 mainContent.style.opacity = '0';
                 
                 setTimeout(() => {
                     mainContent.style.display = 'none';
-                    journeyScreen.style.display = 'flex';
-                    void journeyScreen.offsetWidth; // Reflow
-                    journeyScreen.style.opacity = '1';
+                    photoScreen.style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'auto' });
+                    void photoScreen.offsetWidth;
+                    photoScreen.style.opacity = '1';
 
-                    // Scroll track across the screen (duration 15s)
+                    const photos = document.querySelectorAll('.photo-card');
+                    photos.forEach((photo, index) => {
+                        const rotStart = Math.random() * 90 - 45;
+                        const rotMid = Math.random() * 40 - 20;
+                        const rotFinal = (index % 2 === 0 ? 1 : -1) * (Math.random() * 3 + 1);
+
+                        photo.style.setProperty('--rot-start', `${rotStart}deg`);
+                        photo.style.setProperty('--rot-mid', `${rotMid}deg`);
+                        photo.style.setProperty('--rot-final', `${rotFinal}deg`);
+                        photo.style.animationDelay = `${index * 0.15}s`;
+                        photo.classList.add('burst-active');
+                        
+                        setTimeout(() => {
+                            photo.style.transform = `scale(1) rotate(${rotFinal}deg)`;
+                            photo.style.opacity = '1';
+                            photo.classList.remove('burst-active'); 
+                        }, (1.5 + (index * 0.15)) * 1000 + 50);
+                    });
+
+                    setTimeout(() => {
+                        const journeyBtn = document.getElementById('journey-btn-container');
+                        journeyBtn.style.opacity = '1';
+                        journeyBtn.style.transform = 'translateY(0)';
+                    }, photos.length * 150 + 1500);
+
+                }, 500);
+            };
+
+            window.startJourney = function() {
+                const journeyScreen = document.getElementById('journey-screen');
+                const track = document.getElementById('track');
+                const journeyOverlay = document.getElementById('journey-overlay');
+                const charBox = document.getElementById('char-box');
+
+                photoScreen.style.opacity = '0';
+                setTimeout(() => {
+                    photoScreen.style.display = 'none';
+                    journeyScreen.style.display = 'flex';
+                    void journeyScreen.offsetWidth;
+                    journeyScreen.style.opacity = '1';
+                    
+                    charBox.style.transform = 'scale(1.05)';
                     track.style.animation = 'scroll-track 15s linear forwards';
 
-                    // Trigger Winning message just before the end
                     setTimeout(() => {
+                        charBox.style.transform = 'scale(1)';
                         journeyOverlay.style.display = 'flex';
                         void journeyOverlay.offsetWidth;
                         journeyOverlay.style.opacity = '1';
 
-                        // Transition back to main content
                         setTimeout(() => {
                             journeyOverlay.style.opacity = '0';
                             journeyScreen.style.opacity = '0';
@@ -482,17 +517,15 @@
                             setTimeout(() => {
                                 journeyOverlay.style.display = 'none';
                                 journeyScreen.style.display = 'none';
-                                track.style.animation = 'none'; // Reset animation
+                                track.style.animation = 'none';
                                 
-                                mainContent.style.display = 'block';
-                                void mainContent.offsetWidth;
-                                mainContent.style.opacity = '1';
-
-                                // Scroll back to top
+                                photoScreen.style.display = 'block';
+                                void photoScreen.offsetWidth;
+                                photoScreen.style.opacity = '1';
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                             }, 1000);
                         }, 4000);
-                    }, 13000); // 13 seconds
+                    }, 13000);
                 }, 500);
             };
         });
